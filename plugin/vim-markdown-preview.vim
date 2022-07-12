@@ -3,8 +3,6 @@
 "   git@github.com:JamshedVesuna/vim-markdown-preview.git
 "============================================================
 
-let g:vmp_script_path = resolve(expand('<sfile>:p:h'))
-
 let g:vmp_osname = 'Unidentified'
 
 if has('win32') || has('win64')
@@ -15,8 +13,6 @@ elseif has('unix')
 
   if has('mac') || has('macunix') || has("gui_macvim") || s:uname == "Darwin\n"
     let g:vmp_osname = 'mac'
-    let g:vmp_search_script = g:vmp_script_path . '/applescript/search-for-vmp.scpt'
-    let g:vmp_activate_script = g:vmp_script_path . '/applescript/activate-vmp.scpt'
   else
     let g:vmp_osname = 'unix'
   endif
@@ -92,16 +88,7 @@ function! Vim_Markdown_Preview()
   endif
 
   if g:vmp_osname == 'mac'
-    if g:vim_markdown_preview_browser == "Google Chrome"
-      let b:vmp_preview_in_browser = system('osascript "' . g:vmp_search_script . '"')
-      if b:vmp_preview_in_browser == 1
-        call system('open -g /tmp/vim-markdown-preview.html')
-      else
-        call system('osascript "' . g:vmp_activate_script . '"')
-      endif
-    else
-      call system('open -a "' . g:vim_markdown_preview_browser . '" -g /tmp/vim-markdown-preview.html')
-    endif
+    call system('open -a "' . g:vim_markdown_preview_browser . '" -g /tmp/vim-markdown-preview.html')
   endif
 
   if g:vim_markdown_preview_temp_file == 1
@@ -146,16 +133,7 @@ function! Vim_Markdown_Preview_Local()
   endif
 
   if g:vmp_osname == 'mac'
-    if g:vim_markdown_preview_browser == "Google Chrome"
-      let b:vmp_preview_in_browser = system('osascript "' . g:vmp_search_script . '"')
-      if b:vmp_preview_in_browser == 1
-        call system('open -g vim-markdown-preview.html')
-      else
-        call system('osascript "' . g:vmp_activate_script . '"')
-      endif
-    else
-      call system('open -a "' . g:vim_markdown_preview_browser . '" -g vim-markdown-preview.html')
-    endif
+    call system('open -a "' . g:vim_markdown_preview_browser . '" -g vim-markdown-preview.html')
   endif
 
   if g:vim_markdown_preview_temp_file == 1
